@@ -32,6 +32,10 @@ class _UTipState extends State<UTip> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    // Add style
+    final style = theme.textTheme.titleMedium!.copyWith(
+        color: theme.colorScheme.onPrimary, fontWeight: FontWeight.bold);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("UTip"),
@@ -50,11 +54,13 @@ class _UTipState extends State<UTip> {
                 children: [
                   Text(
                     "Total Per Person ",
-                    style: theme.textTheme.titleMedium,
+                    style: style,
                   ),
                   Text(
                     "\$23.89 ",
-                    style: theme.textTheme.titleSmall,
+                    style: style.copyWith(
+                        color: theme.colorScheme.onPrimary,
+                        fontSize: theme.textTheme.displaySmall?.fontSize),
                   ),
                 ],
               ),
