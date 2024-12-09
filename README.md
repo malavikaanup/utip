@@ -1,6 +1,6 @@
 # utip
 
-A new Flutter project.
+A new Flutter project on Tip Calculator.
 
 ## Getting Started
 
