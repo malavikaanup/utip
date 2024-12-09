@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:utip/widgets/bill_amount_field.dart';
 import 'package:utip/widgets/person_counter.dart';
+import 'package:utip/widgets/tip_row.dart';
 import 'package:utip/widgets/tip_slider.dart';
+import 'package:utip/widgets/total_per_person.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,6 +37,15 @@ class _UTipState extends State<UTip> {
   int _personCount = 1;
 
   double _tipValue = 0.0;
+  double _billTotal = 100.0;
+
+  double perPersonTotal() {
+    return ((_billTotal * _tipValue) + (_billTotal)) / _personCount;
+  }
+
+  double totalTip() {
+    return ((_billTotal * _tipValue) + (_billTotal));
+  }
 
   void increment() {
     setState(() {
@@ -44,13 +55,17 @@ class _UTipState extends State<UTip> {
 
   void decrement() {
     setState(() {
-      _personCount--;
+      if (_personCount > 1) {
+        _personCount--;
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    double total = perPersonTotal();
+    double tipTotal = totalTip();
     // Add style
     final style = theme.textTheme.titleMedium!.copyWith(
         color: theme.colorScheme.onPrimary, fontWeight: FontWeight.bold);
@@ -62,29 +77,7 @@ class _UTipState extends State<UTip> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              padding: const EdgeInsets.all(18.0),
-              decoration: BoxDecoration(
-                  color: theme.colorScheme.inversePrimary,
-                  borderRadius: BorderRadius.circular(10.0)),
-              child: Column(
-                children: [
-                  Text(
-                    "Total Per Person ",
-                    style: style,
-                  ),
-                  Text(
-                    "\$23.89 ",
-                    style: style.copyWith(
-                        color: theme.colorScheme.onPrimary,
-                        fontSize: theme.textTheme.displaySmall?.fontSize),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          TotalPerPerson(theme: theme, style: style, total: total),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
@@ -96,9 +89,9 @@ class _UTipState extends State<UTip> {
               child: Column(
                 children: [
                   BillAmountField(
-                    billAmount: "100",
+                    billAmount: _billTotal.toString(),
                     onChanged: (String value) {
-                      print("Amount: $value");
+                      _billTotal = double.parse(value);
                     },
                   ),
                   //Split Bill area
@@ -109,19 +102,7 @@ class _UTipState extends State<UTip> {
                     onIncrement: increment,
                   ),
                   //Tip Section
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Tip',
-                        style: theme.textTheme.titleMedium,
-                      ),
-                      Text(
-                        '\$20',
-                        style: theme.textTheme.titleMedium,
-                      )
-                    ],
-                  ),
+                  TipRow(theme: theme, tipTotal: tipTotal),
                   //Slider Text
                   Text('${(_tipValue * 100).round()}%'),
 
