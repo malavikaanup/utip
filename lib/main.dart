@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:utip/widgets/bill_amount_field.dart';
 import 'package:utip/widgets/person_counter.dart';
+import 'package:utip/widgets/tip_slider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -86,21 +88,17 @@ class _UTipState extends State<UTip> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
+              padding: const EdgeInsets.all(20.0),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5.0),
                   border:
                       Border.all(color: theme.colorScheme.primary, width: 2)),
               child: Column(
                 children: [
-                  TextField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Bill Amount',
-                      prefixIcon: Icon(Icons.attach_money),
-                    ),
-                    keyboardType: TextInputType.number,
-                    onChanged: (value) {
-                      print("Value: $value");
+                  BillAmountField(
+                    billAmount: "100",
+                    onChanged: (String value) {
+                      print("Amount: $value");
                     },
                   ),
                   //Split Bill area
@@ -128,18 +126,13 @@ class _UTipState extends State<UTip> {
                   Text('${(_tipValue * 100).round()}%'),
 
                   //Tip Slider
-                  Slider(
-                    value: _tipValue,
-                    onChanged: (value) {
+                  TipSlider(
+                    tipValue: _tipValue,
+                    onChanged: (double value) {
                       setState(() {
                         _tipValue = value;
                       });
-                      print(value);
                     },
-                    min: 0,
-                    max: 0.5,
-                    label: '${_tipValue * 100}',
-                    divisions: 5,
                   )
                 ],
               ),
