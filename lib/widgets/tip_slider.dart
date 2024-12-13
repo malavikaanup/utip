@@ -3,27 +3,21 @@ import 'package:flutter/material.dart';
 class TipSlider extends StatelessWidget {
   const TipSlider({
     super.key,
-    required double tipValue,
+    required double tipPercent,
     required this.onChanged,
-  }) : _tipValue = tipValue;
+  }) : _tipPercent = tipPercent;
 
-  final double _tipValue;
+  final double _tipPercent;
   final ValueChanged<double> onChanged;
 
   @override
   Widget build(BuildContext context) {
     return Slider(
-      value: _tipValue,
+      value: _tipPercent,
       onChanged: onChanged,
-      // onChanged: (value) {
-      //   // setState(() {
-      //   //   _tipValue = value;
-      //   // });
-      //   print(value);
-      // },
       min: 0,
       max: 0.5,
-      label: '${_tipValue * 100}',
+      label: '${(_tipPercent * 100).round()}%',
       divisions: 5,
     );
   }

@@ -23,17 +23,21 @@ class PersonCounter extends StatelessWidget {
         Row(
           children: [
             IconButton(
-                color: theme.colorScheme.primary,
                 onPressed: onDecrement,
-                icon: const Icon(Icons.remove)),
+                icon: Icon(
+                  Icons.remove,
+                  color: theme.colorScheme.primary,
+                )),
             Text(
               '$_personCount',
               style: theme.textTheme.titleMedium,
             ),
             IconButton(
-                color: theme.colorScheme.primary,
                 onPressed: onIncrement,
-                icon: const Icon(Icons.add))
+                icon: Icon(
+                  Icons.add,
+                  color: theme.colorScheme.primary,
+                ))
           ],
         )
       ],

@@ -4,11 +4,13 @@ class TipRow extends StatelessWidget {
   const TipRow({
     super.key,
     required this.theme,
-    required this.tipTotal,
+    required this.billTotal,
+    required this.percentage,
   });
 
   final ThemeData theme;
-  final double tipTotal;
+  final double billTotal;
+  final double percentage;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class TipRow extends StatelessWidget {
           style: theme.textTheme.titleMedium,
         ),
         Text(
-          '\$${tipTotal.toStringAsFixed(2)}',
+          '\$${(billTotal * percentage).toStringAsFixed(2)}',
           style: theme.textTheme.titleMedium,
         )
       ],
